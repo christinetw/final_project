@@ -35,11 +35,12 @@ module Api
       end
 
       # fast_jsonapi serializer
-   def serializer(records, options = {})
-        ReviewSerializer
-         .new(records, options)
-        .serialized_json
-    end
+      def serializer(records, options = {})
+        puts "here"
+         RestaurantSerializer
+         .new(@records, @options)
+         .serialized_json
+     end
 
       def errors(record)
         { errors: record.errors.messages }

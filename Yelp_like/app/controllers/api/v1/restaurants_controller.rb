@@ -7,7 +7,7 @@ module Api
       def index
         puts restaurants
         #render json: serializer(restaurants, options)
-        render json: @restaurants.to_json(only: [:name, :image_url])
+        render json: @restaurants.to_json(only: [:name, :image_url, :average_score, :location])
       end
       
       # GET /api/v1/restaurants/:slug
