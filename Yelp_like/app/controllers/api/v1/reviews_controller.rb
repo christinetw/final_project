@@ -37,7 +37,7 @@ module Api
       # fast_jsonapi serializer
       def serializer(records, options = {})
         puts "here"
-         RestaurantSerializer
+         ReviewSerializer
          .new(@records, @options)
          .serialized_json
      end
