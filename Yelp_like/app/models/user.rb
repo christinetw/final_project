@@ -44,3 +44,4 @@ class User < ApplicationRecord
     SecureRandom.hex
   end
 end
+

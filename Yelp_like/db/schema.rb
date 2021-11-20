@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_17_192815) do
+ActiveRecord::Schema.define(version: 2021_11_20_183800) do
 
   create_table "restaurants", force: :cascade do |t|
     t.string "name"
     t.string "image_url"
     t.string "slug"
     t.string "location"
+    t.integer "average_score"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -33,7 +34,6 @@ ActiveRecord::Schema.define(version: 2021_11_17_192815) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
     t.string "email"
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
@@ -41,4 +41,6 @@ ActiveRecord::Schema.define(version: 2021_11_17_192815) do
   end
 
   add_foreign_key "reviews", "restaurants"
+  add_foreign_key "users","reviews"
+  add_foreign_key "users","restaurants"
 end
