@@ -5,9 +5,8 @@ module Api
       before_action :authenticate, only: %i[logout]
 
       def create
-        user = User.find_by(email: params[:user][:email])
-
-        if user && user.authenticate(params[:user][:password])
+        user = User.find_by(email: params[:email])
+        if user && user.authenticate(params[:password])
           session[:user_id] = user.id
           render json: { status: :success, logged_in: true }, status: 204
         else

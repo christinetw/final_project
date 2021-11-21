@@ -19,7 +19,7 @@ module Api
       def create
         restaurant = Restaurant.new(restaurant_params)
 
-        if airline.save
+        if restaurant.save
           render json: serializer(airline)
         else
           render json: errors(airline), status: 422
