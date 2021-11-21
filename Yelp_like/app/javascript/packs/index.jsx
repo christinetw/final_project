@@ -4,14 +4,18 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css';
 
 import App from '../components/App';
+import * as serviceWorker from './serviceWorker';
 
 
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <App/>,
+      <React.StrictMode>
+    <App/> </React.StrictMode>,
     document.body.appendChild(document.createElement('div')),
   )
 })
+serviceWorker.unregister();

@@ -1,52 +1,46 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, {useState} from 'react';
+import './App.css';
+import Header from '../components/Header/Header';
+import LoginForm from './LoginForm/LoginForm';
+import RegistrationForm from './RegistrationForm/RegistrationForm';
+import Home from './Home/Home';
+import PrivateRoute from '../utils/PrivateRoute';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import AlertComponent from './AlertComponent/AlertComponent';  
+import LoadData from "./loadData"
 
-const App = () => {
-
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
-
-  // Note: the empty deps array [] means
-  // this useEffect will run once
-  // similar to componentDidMount()
-  useEffect(() => {
-    fetch("http://localhost:3000/api/v1/restaurants")
-      .then(res => res.json())
-      .then(
-        (result) => {
-          setIsLoaded(true);
-          setItems(result);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-        }
-      )
-  }, [])
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
-    return <div>Loading...</div>;
-  } else {
-    return (
-      <ul>
-        {items.map(item => (
-          <li key={item.id}>
-            {item.name} {item.location}
-            {item.image_url}
-          </li>
-        ))}
-      </ul>
-    );
-  }
+function App() {
+  const [title, updateTitle] = useState(null);
+  const [errorMessage, updateErrorMessage] = useState(null);
+  return (
+    <Router>
+    <div className="App">
+      <Header title={title}/>
+        <div className="container d-flex align-items-center flex-column">
+          <Switch>
+            <Route path="/" exact={true}>
+              <RegistrationForm showError={updateErrorMessage} updateTitle={updateTitle}/>
+            </Route>
+            <Route path="/register">
+              <RegistrationForm showError={updateErrorMessage} updateTitle={updateTitle}/>
+            </Route>
+            <Route path="/login">
+              <LoginForm showError={updateErrorMessage} updateTitle={updateTitle}/>
+            </Route>
+            <PrivateRoute path="/home">
+              <Home/>
+            </PrivateRoute>
+          </Switch>
+          <AlertComponent errorMessage={errorMessage} hideError={updateErrorMessage}/>
+        </div>
+        {/* <LoadData/> */}
+    </div>
+    </Router>
+  );
 }
 
-export default App
-
-
+export default App;
