@@ -24,5 +24,5 @@ Rails.application.routes.draw do
     end
   end
 
-  get '*path', to: 'pages#index', via: :all
+  get '*path', to: 'layouts#application', via: :all
 end
