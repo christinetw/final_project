@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
  
 
-  root 'pages#index'
+  root 'layouts#application'
 
   namespace :api do
     namespace :v1 do

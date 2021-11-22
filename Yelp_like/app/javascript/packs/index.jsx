@@ -9,13 +9,11 @@ import './index.css';
 import App from '../components/App';
 import * as serviceWorker from './serviceWorker';
 
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-      <React.StrictMode>
-    <App/> </React.StrictMode>,
-    document.body.appendChild(document.createElement('div')),
-  )
-})
-serviceWorker.unregister();
+  document.addEventListener('DOMContentLoaded', () => {
+    ReactDOM.render(
+        <React.StrictMode>
+      <App/> </React.StrictMode>,
+      document.body.appendChild(document.createElement('div')),
+    )
+  })
+  serviceWorker.unregister();
