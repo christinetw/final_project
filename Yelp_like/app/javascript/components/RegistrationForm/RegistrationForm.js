@@ -28,7 +28,7 @@ function RegistrationForm(props) {
             // axios.post(API_BASE_URL+'/user/register', payload)
             axios.post('/api/v1/registrations', payload)
                 .then(function (response) {
-                    if(response.status === 200){
+                    if(response.status >= 200 && response.status <= 299){
                         setState(prevState => ({
                             ...prevState,
                             'successMessage' : 'Registration successful. Redirecting to home page..'
