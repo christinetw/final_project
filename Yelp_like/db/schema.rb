@@ -41,6 +41,4 @@ ActiveRecord::Schema.define(version: 2021_11_20_183800) do
   end
 
   add_foreign_key "reviews", "restaurants"
-  add_foreign_key "users","reviews"
-  add_foreign_key "users","restaurants"
 end
