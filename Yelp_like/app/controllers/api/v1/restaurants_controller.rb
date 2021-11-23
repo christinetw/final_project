@@ -17,12 +17,19 @@ module Api
 
       # POST /api/v1/restaurants
       def create
-        restaurant = Restaurant.new(restaurant_params)
+        #restaurant = Restaurant.new(restaurant_params)
+        restaurant = Restaurant.new(
+          name: params[:name],
+          location: params[:location],
+          image_url: params[:image_url],
+          average_score: params[:average_score]
+        )
 
         if restaurant.save
-          render json: serializer(airline)
+          #render json: serializer(restaurant)
+          render json: { status: :success, logged_in: true }, status: 200
         else
-          render json: errors(airline), status: 422
+          render json: errors(restaurant), status: 422
         end
       end
 
@@ -66,7 +73,7 @@ module Api
 
       # Strong params
       def restaurant_params
-        params.require(:restaurant).permit(:name, :image_url)
+        params.require(:name, :location, :image_url, :average_score)
       end
 
       # fast_jsonapi serializer
