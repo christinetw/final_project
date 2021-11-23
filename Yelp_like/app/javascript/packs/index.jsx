@@ -8,11 +8,15 @@ import './index.css';
 
 import App from '../components/App';
 import * as serviceWorker from './serviceWorker';
+import { AppProvider } from '../components/context'
 
   document.addEventListener('DOMContentLoaded', () => {
     ReactDOM.render(
         <React.StrictMode>
-      <App/> </React.StrictMode>,
+           <AppProvider>
+      <App/>
+      </AppProvider>
+       </React.StrictMode>,
       document.body.appendChild(document.createElement('div')),
     )
   })

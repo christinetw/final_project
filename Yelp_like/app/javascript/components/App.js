@@ -1,24 +1,32 @@
 import React, {useState} from 'react';
-import './App.css';
-import Header from '../components/Header/Header';
-import LoginForm from './LoginForm/LoginForm';
-import RegistrationForm from './RegistrationForm/RegistrationForm';
-import Home from './Home/Home';
-import PrivateRoute from '../utils/PrivateRoute';
+//import './App.css';
+//import Header from '../components/Header/Header';
+//import LoginForm from './LoginForm/LoginForm';
+//import RegistrationForm from './RegistrationForm/RegistrationForm';
+//import Home from './Home/Home';
+//import PrivateRoute from '../utils/PrivateRoute';
 import {
   BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
-import AlertComponent from './AlertComponent/AlertComponent';  
-import LoadData from "./loadData"
+//import AlertComponent from './AlertComponent/AlertComponent';  
+//import LoadData from "./loadData"
+
+// import pages
+import Home from "../pages/Home";
+import About from "../pages/About";
+import SingleRestaurant from "../pages/SingleRestaurant";
+import Error from "../pages/Error";
+// import components
+import Navbar from "./Navbar";
 
 function App() {
   const [title, updateTitle] = useState(null);
   const [errorMessage, updateErrorMessage] = useState(null);
   return (
     <Router>
-    <div className="App">
+    {/* <div className="App">
       <Header title={title}/>
         <div className="container d-flex align-items-center flex-column">
           <Switch>
@@ -37,8 +45,23 @@ function App() {
           </Switch>
           <AlertComponent errorMessage={errorMessage} hideError={updateErrorMessage}/>
         </div>
-        {/* <LoadData/> */}
-    </div>
+         <LoadData/> 
+    </div> */}
+          <Navbar />
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/about">
+          <About />
+        </Route>
+        <Route path="/restaurant/:id">
+          <SingleRestaurant />
+        </Route>
+        <Route path="*">
+          <Error />
+        </Route>
+      </Switch>
     </Router>
   );
 }
