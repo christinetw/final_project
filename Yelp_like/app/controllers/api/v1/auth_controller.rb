@@ -8,7 +8,7 @@ module Api
         user = User.find_by(email: params[:email])
         if user && user.authenticate(params[:password])
           session[:user_id] = user.id
-          render json: { status: :success, logged_in: true }, status: 204
+          render json: { status: :success, logged_in: true }, status: 200
         else
           render json: { status: :error, logged_in: false }, status: 400
         end
