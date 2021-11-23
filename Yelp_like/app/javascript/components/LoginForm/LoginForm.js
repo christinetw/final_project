@@ -44,6 +44,7 @@ function LoginForm(props) {
             })
             .catch(function (error) {
                 console.log(error);
+                props.showError("Username does not exists!");
             });
     }
     const redirectToHome = () => {
