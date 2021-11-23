@@ -10,7 +10,7 @@ module Api
 
         if user.save
           session[:user_id] = user.id
-          render json: { status: :success, logged_in: true }, status: 204
+          render json: { status: :success, logged_in: true }, status: 200
         else
           render json: { status: :error, logged_in: false }, status: 422
         end

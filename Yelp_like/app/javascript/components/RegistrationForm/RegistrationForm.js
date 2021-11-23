@@ -28,7 +28,7 @@ function RegistrationForm(props) {
             // axios.post(API_BASE_URL+'/user/register', payload)
             axios.post('/api/v1/registrations', payload)
                 .then(function (response) {
-                    if(response.status >= 200 && response.status <= 299){
+                    if(response.status === 200 ){
                         setState(prevState => ({
                             ...prevState,
                             'successMessage' : 'Registration successful. Redirecting to home page..'
@@ -42,6 +42,7 @@ function RegistrationForm(props) {
                 })
                 .catch(function (error) {
                     console.log(error);
+                    props.showError("Already registered!");
                 });    
         } else {
             props.showError('Please enter valid username and password')    
