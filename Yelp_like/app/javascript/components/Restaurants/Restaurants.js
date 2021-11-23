@@ -1,19 +1,19 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import axios from 'axios'
+import { BrowserRouter as Router, Link } from 'react-router-dom'
 // import RestaurantItem from './RestaurantItem'
 
-const RestaurantItem = ({ name, location, image_url, average_score }) => {
+const RestaurantItem = ({ name, location, image_url, average_score, slug }) => {
   return (
     <div className="box">
       <div className="restaurant-image">
-        <img src={image_url} alt={name} width="500" height="600"/>
+        <img src={image_url} alt={name} width="250" height="300"/>
       </div>
       <div className="restaurant-name">{name}</div>
       <div className="restaurant-location">{location}</div>
-      {/* <div className="restaurant-score">{average_score}</div> */}
-      {/* <div className="restaurant-link">
-        <a href={`/restaurants/${slug}`}>See Restaurant Reviews</a>
-      </div> */}
+      <div className="restaurant-link">
+        <Link to={`/restaurants/${slug}`}>See {name} Reviews</Link>
+      </div>
     </div>
   )
 }
@@ -41,10 +41,10 @@ const Restaurants = () => {
             location={item.location}
             image_url={item.image_url}
             average_score={item.average_score}
+            slug={item.slug}
           />)}
       </ul>
     </Fragment>
-
   )
 }
 

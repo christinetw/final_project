@@ -11,7 +11,7 @@ class Restaurant < ApplicationRecord
 
   # Get the average score of all reviews for an airline
   def calculate_average
-    return 0 unless reviews.size.positive?
+    return 0 unless reviews.count.positive?
 
     avg = reviews.average(:score).to_f.round(2) * 100
     update_column(:average_score, avg)
