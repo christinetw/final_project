@@ -12,6 +12,8 @@ import {
 } from "react-router-dom";
 import AlertComponent from './AlertComponent/AlertComponent';  
 import LoadData from "./loadData"
+import Restaurant from './Restaurant/Restaurant';
+import Restaurants from './Restaurants/Restaurants';
 
 function App() {
   const [title, updateTitle] = useState(null);
@@ -22,9 +24,10 @@ function App() {
       <Header title={title}/>
         <div className="container d-flex align-items-center flex-column">
           <Switch>
-            <Route path="/" exact={true}>
-              <RegistrationForm showError={updateErrorMessage} updateTitle={updateTitle}/>
+            <Route path="/" exact={true} component={Restaurants}>
+              {/* <RegistrationForm showError={updateErrorMessage} updateTitle={updateTitle}/> */}
             </Route>
+            <Route path="/restaurants/:slug" component={Restaurant} />
             <Route path="/register">
               <RegistrationForm showError={updateErrorMessage} updateTitle={updateTitle}/>
             </Route>

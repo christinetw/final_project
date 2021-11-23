@@ -10,7 +10,7 @@ module Api
         if review.save
           render json: ReviewSerializer.new(reviews).serializer_json
         else
-          render json:{error:restaurant.error.messages}, status: 422
+          render json:{error:review.error.messages}, status: 422
         end
       end
 
@@ -23,7 +23,7 @@ module Api
            
             head :no_content
           else
-            render json:{error:restaurant.error.messages}, status: 422
+            render json:{error:review.error.messages}, status: 422
           end
         end
 

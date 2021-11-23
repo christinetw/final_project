@@ -12,7 +12,8 @@ module Api
       
       # GET /api/v1/restaurants/:slug
       def show
-        render json: serializer(restaurant, options)
+        restaurant = Restaurant.find_by(slug: params[:slug])
+        render json: RestaurantSerializer.new(restaurant, options).serialized_json
       end
 
       # POST /api/v1/restaurants
@@ -33,7 +34,7 @@ module Api
         if restaurant.update(restaurant_params)
           render json: serializer(restaurant, options)
         else
-          render json: errors(restaurant), status: 422
+          render json:{error:restaurant.error.messages}, status: 422
         end
       end
 
@@ -42,7 +43,7 @@ module Api
         if restaurant.destroy
           head :no_content
         else
-          render json: errors(restaurant), status: 422
+          render json:{error:restaurant.error.messages}, status: 422
         end
       end
 
