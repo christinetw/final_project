@@ -79,7 +79,7 @@ a {
   color: var(--mainBlack);
 }
 img {
-  /* width: 100%; */
+  width: 100%;
   display: block;
 }
 
@@ -241,6 +241,21 @@ restaurantss List
     grid-template-columns: repeat(auto-fill, minmax(338.8px, 1fr));
   }
 }
+
+/* 
+====== 
+SingleRestaurant
+======
+*/
+
+.restaurant-image {
+  width:fit-content
+}
+
+
+
+
+
 /* 
 ====== 
 rest 
