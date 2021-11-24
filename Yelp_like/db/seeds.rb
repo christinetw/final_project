@@ -8,57 +8,57 @@
 restaurants = Restaurant.create([
   { 
     name: "Aloette Restaurant",
-    image_url: "https://www.google.com/url?sa=i&url=https%3A%2F%2Faloetterestaurant.com%2F%3Fattachment_id%3D36&psig=AOvVaw0bLM0LeZj5oNEJjozzTEjY&ust=1637439180161000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCLjv08GepfQCFQAAAAAdAAAAABAD",
+    image_url: "https://aloetterestaurant.com/wp-content/uploads/2017/10/Aloette-Interiors_002.jpg",
     location: "163 Spadina Avenue, 1st Floor, Toronto"
-  }, 
+  },
   { 
     name: "George",
-    image_url: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.tripadvisor.ca%2FLocationPhotoDirectLink-g155019-d787134-i301947512-GEORGE_Restaurant-Toronto_Ontario.html&psig=AOvVaw0bp8ec_taIfsE_D_0OJCAX&ust=1637529679805000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPCo4Mrvp_QCFQAAAAAdAAAAABAD",
+    image_url: "https://img2.10bestmedia.com/Images/Photos/358410/381787-526062837422989-1836650623-n_55_660x440.jpg",
     location: "111C Queen Street E, Toronto"
   }, 
   { 
     name: "Canoe",
-    image_url: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.oliverbonacini.com%2Frestaurants%2Fcanoe%2F&psig=AOvVaw0iN4wOKcSrod6cMw6wuzfX&ust=1637529735648000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCOitnunvp_QCFQAAAAAdAAAAABAD",
+    image_url: "https://3di6zv3beqwj3om56f47wlza-wpengine.netdna-ssl.com/wp-content/uploads/2015/06/6canoe.jpg",
     location: "66 Wellington Street W, 54th Floor, Toronto"
   }, 
   { 
     name: "DailLo",
-    image_url: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.oliverbonacini.com%2Frestaurants%2Fcanoe%2F&psig=AOvVaw0iN4wOKcSrod6cMw6wuzfX&ust=1637529735648000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCOitnunvp_QCFQAAAAAdAAAAABAD",
+    image_url: "https://media.cntraveler.com/photos/5b22bfe4f7e9307cb983b46e/16:9/w_2240,c_limit/DaiLo__2018__BAC1382.jpg",
     location: "1503 College Street, Toronto"
   }, 
   { 
     name: "Miku",
-    image_url: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fmikutoronto.com%2F&psig=AOvVaw3c9X_yr0XmULcTKU54hX_-&ust=1637529866658000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCJDT-KLwp_QCFQAAAAAdAAAAABAE",
+    image_url: "https://mikutoronto.com/wp-content/uploads/2015/03/dining-room-2-1030x687.jpg",
     location: "10 Bay Street, 105, Toronto"
   }, 
   { 
     name: "Jacobs & Co. Steakhouse",
-    image_url: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2Fjacobssteakhouse%2F&psig=AOvVaw2XceWLKjsrWf9Swm9dAiWw&ust=1637529950940000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIjQ8crwp_QCFQAAAAAdAAAAABAD",
+    image_url: "https://b.zmtcdn.com/data/pictures/2/8905322/1cf4a57c4e45075ded8fda4ed14cbef3.jpg?output-format=webp&fit=around|771.75:416.25&crop=771.75:416.25;*,*",
     location: "12 Brant Street, Toronto"
   }, 
   { 
     name: "Fishman Lobster Clubhouse Restaurant",
-    image_url: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fflctoronto.com%2F&psig=AOvVaw3QY9jq79WKpzfKNE-F7Rin&ust=1637530019597000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPDHq_Hwp_QCFQAAAAAdAAAAABAD",
+    image_url: "https://img1.wsimg.com/isteam/ip/35d04655-b77e-4a9a-a5fd-ca709d04eedf/lobster6.jpg/:/rs=w:1300,h:800",
     location: "4020 Finch Avenue E, Toronto"
   }, 
   { 
     name: "Sushi on Bloor",
-    image_url: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.tripadvisor.ca%2FLocationPhotoDirectLink-g155019-d709395-i238296656-Sushi_On_Bloor-Toronto_Ontario.html&psig=AOvVaw1C80d4igG3zQicfrpwGx2o&ust=1637530192171000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCICut77xp_QCFQAAAAAdAAAAABAD",
+    image_url: "https://media-cdn.tripadvisor.com/media/photo-s/0e/34/1e/50/outside-of-the-restaurant.jpg",
     location: "525 Bloor Street W, Toronto"
   }, 
   { 
     name: "Yasu",
-    image_url: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.tripadvisor.ca%2FLocationPhotoDirectLink-g155019-d709395-i238296656-Sushi_On_Bloor-Toronto_Ontario.html&psig=AOvVaw1C80d4igG3zQicfrpwGx2o&ust=1637530192171000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCICut77xp_QCFQAAAAAdAAAAABAD",
+    image_url: "https://images.squarespace-cdn.com/content/v1/533078b0e4b0ccd5fa57e1ff/1461544750843-EA5RAW3HA7Y1JBBHLBCW/YASU+Toronto+Omakase",
     location: "81 Harbord Street, Toronto"
   }, 
   { 
     name: "Kinka Izakaya",
-    image_url: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.kinka.com%2Flocation%2Fkinka-izakaya-harbourfront%2F&psig=AOvVaw0Pl-DveWq2C9LQx_Rp-_4n&ust=1637530398800000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCOi21aPyp_QCFQAAAAAdAAAAABAD",
+    image_url: "https://images.getbento.com/accounts/5d21d7abc160b36d5cd820a4adda5083/media/xU8L3LAR66rorb68DPnQ_20191129-0E0A0156.jpg?w=1200&fit=crop&auto=compress,format&h=600",
     location: "398 Church Street, Toronto"
   }, 
   { 
     name: "Hokkaido Ramen Santouka",
-    image_url: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdobbernationloves.com%2Ffood-drink%2Freview-santouka-ramen-toronto%2F&psig=AOvVaw2WI4rTpiz289HIlhExVKtv&ust=1637530541580000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPjowuTyp_QCFQAAAAAdAAAAABAI",
+    image_url: "http://1.bp.blogspot.com/-8s5y7exnFPw/UKWeSsJ5fyI/AAAAAAAACVw/NP9_NpOobTQ/s1600/DSC01597.JPG",
     location: "91 Dundas Street E, Toronto"
   }
 ])
