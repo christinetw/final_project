@@ -66,7 +66,7 @@ export default function SingleRestaurant(props) {
     <div className="box">
       <div className="restaurant-image">
         {!restaurant.attributes ? null : (
-          <img src={restaurant.attributes.image_url} alt={restaurant.attributes.name} width={250} height={300} />
+        <img src={restaurant.attributes.image_url} alt={restaurant.attributes.name} width={250} height={300} />
         )}
       </div>
       {!restaurant.attributes ? null : (
