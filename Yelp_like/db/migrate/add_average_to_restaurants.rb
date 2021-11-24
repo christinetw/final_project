@@ -1,6 +1,6 @@
 
    
-class AddAverageToAirlines < ActiveRecord::Migration[6.0]
+class AddAverageToRestaurants < ActiveRecord::Migration[6.1]
   def change
     add_column :airlines, :average_score, :integer, default: 0 
   end

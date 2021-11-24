@@ -1,6 +1,6 @@
 class ReviewSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :title, :description, :score, :airline_id
+  attributes :title, :description, :score, :restaurant_id
 
   attribute :email do |object|
     object&.user&.email
