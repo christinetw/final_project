@@ -20,7 +20,7 @@ export default function RestaurantList() {
       <h2 className='section-title'>restaurant</h2>
       <div className='restaurants-center'>
         {restaurants.map((item) => {
-          return <Restaurant key={item.id} {...item} />
+          return <Restaurant key={item.slug} {...item} />
         })}
       </div>
     </section>

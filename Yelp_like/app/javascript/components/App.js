@@ -21,6 +21,7 @@ import Error from "../pages/Error";
 // import components
 import Navbar from "./Navbar";
 
+
 function App() {
   const [title, updateTitle] = useState(null);
   const [errorMessage, updateErrorMessage] = useState(null);
@@ -55,9 +56,7 @@ function App() {
         <Route path="/about">
           <About />
         </Route>
-        <Route path="/restaurant/:id">
-          <SingleRestaurant />
-        </Route>
+        <Route path="/restaurants/:slug" component={SingleRestaurant}/>
         <Route path="*">
           <Error />
         </Route>

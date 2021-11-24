@@ -62,6 +62,7 @@ restaurants = Restaurant.create([
     location: "91 Dundas Street E, Toronto"
   }
 ])
+
 reviews = Review.create([{
   title: 'good restaurant',
   description:'good food',

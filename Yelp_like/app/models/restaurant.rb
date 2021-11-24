@@ -9,7 +9,7 @@ class Restaurant < ApplicationRecord
     restaurant.slug = restaurant.name.parameterize
   end
 
-  # Get the average score of all reviews for an airline
+  # Get the average score of all reviews for a restaurant
   def calculate_average
     return 0 unless reviews.size.positive?
 

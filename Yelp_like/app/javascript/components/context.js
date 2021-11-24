@@ -29,15 +29,16 @@ const AppProvider = ({ children }) => {
             image_url,
             location,
             average_score,
+            slug
           } = item
-          const idRestaurant = new Date().getTime().toString();
+          // const idRestaurant = new Date().getTime().toString();
           return {
-            id: idRestaurant ,
+            // id: idRestaurant ,
             name: name,
             image_url: image_url,
             location: location,
             average_score: average_score,
-      
+            slug: slug
           }
         })
         setRestaurants(newRestaurants)
