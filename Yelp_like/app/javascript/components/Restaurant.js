@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 export default function Restaurant({ image_url, name, id, location, average_score, slug }) {
-  console.log({image_url, name, id, location, average_score, slug})
+  //  console.log({image_url, name, id, location, average_score, slug})
   return (
     <article className='rest'>
       <div className='img-container'>

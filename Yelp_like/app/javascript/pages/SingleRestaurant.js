@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Loading from '../components/Loading'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
+import { useGlobalContext } from '../components/context'
 
 export default function SingleRestaurant(props) {
   const { name, location, image_url, average_score } = props
@@ -9,20 +10,24 @@ export default function SingleRestaurant(props) {
   const [review, setReview] = useState([])
   // const { id } = useParams()
   const [loading, setLoading] = useState(false)
+  let { isLoggedIn, setIsLoggedIn } = useGlobalContext()
+  if (!isLoggedIn) {
+    return <Redirect to='/login' />
+  }
 
-  console.log({restaurant});
+  console.log({ restaurant });
   useEffect(() => {
     const slug = props.match.params.slug
     const url = `/api/v1/restaurants/${slug}`
-    
+
     axios.get(url)
       .then(res => {
         console.log("+++++++++++++", res.data.data);
         setRestaurant(res.data.data)
       })
       .catch(res => console.log(res))
-      setLoading(true)
-    
+    setLoading(true)
+
     // async function getRestaurant() {
     //   try {
     //     const response = await fetch(
@@ -66,14 +71,14 @@ export default function SingleRestaurant(props) {
     <div className="box">
       <div className="restaurant-image">
         {!restaurant.attributes ? null : (
-        <img src={restaurant.attributes.image_url} alt={restaurant.attributes.name} width={250} height={300} />
+          <img src={restaurant.attributes.image_url} alt={restaurant.attributes.name} width={250} height={300} />
         )}
       </div>
       {!restaurant.attributes ? null : (
         <div>
           <div className="restaurant-name">{restaurant.attributes.name}</div>
           <div className="restaurant-location">{restaurant.attributes.location}</div>
-      <div className="average-score">{restaurant.attributes.average_score}</div>
+          <div className="average-score">{restaurant.attributes.average_score}</div>
         </div>
       )}
 

@@ -9,18 +9,34 @@ const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('o')
   const [restaurants, setRestaurants] = useState([])
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  const fetchRestaurants = useCallback( async () => {
+  const fetchRestaurants = useCallback(async () => {
     setLoading(true)
     try {
       //const response = await fetch(`${url}${searchTerm}`)
       const response = await fetch(`${url}`)
       const data = await response.json()
- 
-      console.log(data);
 
-      const restaurants = data.filter((restaurant) => restaurant.name.includes(searchTerm))
-      console.log(restaurants);
+      //console.log("data ", data);
+
+      const restaurants1 = data.filter((restaurant) => restaurant.name.includes(searchTerm))
+      let restaurants = [];
+      let found = false;
+      restaurants1.forEach((element, index) => {
+        if (restaurants) {
+          restaurants.forEach(element1 => {
+            if (element1.name === element.name) {
+              found = 1;
+            }
+          })
+          if (!found)
+            restaurants.push(element);
+        } else {
+          restaurants.push(element);
+        }
+      });
+      // console.log("Restaurants ", restaurants);
 
       if (restaurants) {
         const newRestaurants = restaurants.map((item) => {
@@ -50,13 +66,13 @@ const AppProvider = ({ children }) => {
       console.log(error)
       setLoading(false)
     }
-  },[searchTerm])
+  }, [searchTerm])
   useEffect(() => {
     fetchRestaurants()
-  }, [searchTerm,fetchRestaurants])
+  }, [searchTerm, fetchRestaurants])
   return (
     <AppContext.Provider
-      value={{ loading, restaurants, searchTerm, setSearchTerm }}
+      value={{ loading, restaurants, searchTerm, setSearchTerm, isLoggedIn, setIsLoggedIn }}
     >
       {children}
     </AppContext.Provider>
