@@ -3,6 +3,7 @@ import Loading from '../components/Loading'
 import { useParams, Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
 import { useGlobalContext } from '../components/context'
+import Rating from '../components/rating/rating';
 
 export default function SingleRestaurant(props) {
   const { name, location, image_url, average_score } = props
@@ -78,7 +79,7 @@ export default function SingleRestaurant(props) {
         <div>
           <div className="restaurant-name">{restaurant.attributes.name}</div>
           <div className="restaurant-location">{restaurant.attributes.location}</div>
-          <div className="average-score">{restaurant.attributes.average_score}</div>
+          <div className="average-score"> <Rating score={restaurant.attributes.average_score} /></div>
         </div>
       )}
 

@@ -1,13 +1,19 @@
 import React from 'react'
-import './Rating.css'
-
+//import './rating.css'
+import ReactStars from "react-rating-stars-component";
 const Rating = (props) => {
-  const score = (props.score / 5) * 100
-
+  // console.log(props.score);
+  const ratingChanged = (newRating) => {
+    console.log(newRating);
+  };
   return (
-    <span className="star-wrapper">
-      <span className="stars" style={{ width: score + "%" }}></span>
-    </span>
+    <ReactStars
+      count={5}
+      value={props.score}
+      onChange={ratingChanged}
+      size={24}
+      activeColor="#ffd700"
+    />
   )
 }
 
