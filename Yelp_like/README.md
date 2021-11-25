@@ -10,6 +10,7 @@ Things you may want to cover:
 * System dependencies
 
 * Configuration
+For Google Maps to work, set the environemnt variable REACT_APP_GOOGLE_MAPS_API_KEY to a valid API key.
 
 * Database creation
 

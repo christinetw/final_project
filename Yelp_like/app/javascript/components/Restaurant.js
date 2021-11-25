@@ -6,7 +6,9 @@ export default function Restaurant({ image_url, name, id, location, average_scor
 
   let imageSrc = "https://maps.googleapis.com/maps/api/staticmap?markers=";
   imageSrc += location.replace(/ /g, "+");
-  imageSrc += ",Toronto,Ontario&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true&key=AIzaSyC62WGE4DlS6wzMTkLrq3EIszj2qUUpa1o";
+  imageSrc += ",Toronto,Ontario&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true";
+  imageSrc += "&key=" + process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+  console.log(imageSrc);
   
   return (
     <article className='rest'>
