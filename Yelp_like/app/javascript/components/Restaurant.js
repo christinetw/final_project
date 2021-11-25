@@ -8,8 +8,8 @@ export default function Restaurant({ image_url, name, id, location, average_scor
   imageSrc += location.replace(/ /g, "+");
   imageSrc += ",Toronto,Ontario&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true";
   imageSrc += "&key=" + process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-  console.log(imageSrc);
-
+  
+ 
   return (
     <article className='rest'>
       <div className='img-container'>
@@ -18,7 +18,7 @@ export default function Restaurant({ image_url, name, id, location, average_scor
       <div className='rest-footer'>
         <h3>{name}</h3>
         <h4><Rating score={average_score} /> </h4>
-
+       
         <p>{location}</p>
         <Link to={`/restaurants/${slug}`} className='btn btn-primary btn-details'>
           details
