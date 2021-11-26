@@ -6,17 +6,26 @@ module Api
       # POST /api/v1/reviews
       def create
         #review = Review.reviews.new(review_params)
-        review = Review.new(
-          title: params[:title],
-          description: params[:description],
-          score: params[:score],
-          restaurant_id: params[:restaurant_id],
-          user_id: session[:user_id]
-        )
+        review = Review.create(review_params)
+        review.user_id = session[:user_id]
+        review.restaurant_id = params[:restaurant_id]
+        
+      # (
+      #   title: params.review[:title],
+      #   description: params.review[:description],
+      #   score: params[:score],
+      #   restaurant_id: params[:restaurant_id],
+      #   user_id: session[:user_id]
+      # )
 
         if review.save!
           #render json: ReviewSerializer.new(reviews).serializer_json
-          render json: { status: :success, logged_in: true }, status: 200
+          render json: { review: {
+          title: review.title,
+          description: review.description,
+          id: review.id,
+          created_at: review.created_at
+          }, status: :success, logged_in: true }, status: 200
         else
           render json:{error:["could not save review"]}, status: 422
         end

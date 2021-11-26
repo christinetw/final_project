@@ -249,7 +249,14 @@ SingleRestaurant
 */
 
 .restaurant-image {
-  width:fit-content
+  width: 75%;
+  height: max-height;
+  border-radius: 8px;
+}
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
 }
 
 

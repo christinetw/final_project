@@ -1,0 +1,288 @@
+From cb708711afaa5cc4872dc2dc2a35f8c995ec5362 Mon Sep 17 00:00:00 2001
+From: Tammy <tammyanndo@gmail.com>
+Date: Wed, 24 Nov 2021 16:52:05 -0500
+Subject: [PATCH] created form component and imported to SingleRestaurant
+
+reviews column
+
+connected form to reviews table
+---
+ .../api/v1/restaurants_controller.rb          |  2 +-
+ .../controllers/api/v1/reviews_controller.rb  | 26 ++++---
+ .../app/javascript/components/ReviewForm.js   | 17 +++++
+ Yelp_like/app/javascript/packs/index.css      |  9 ++-
+ .../app/javascript/pages/SingleRestaurant.js  | 70 ++++++++++++++-----
+ .../20211125204519_add_user_id_to_reviews.rb  |  5 ++
+ .../db/migrate/add_average_to_restaurants.rb  |  2 +-
+ Yelp_like/db/schema.rb                        |  9 ++-
+ 8 files changed, 106 insertions(+), 34 deletions(-)
+ create mode 100644 Yelp_like/app/javascript/components/ReviewForm.js
+ create mode 100644 Yelp_like/db/migrate/20211125204519_add_user_id_to_reviews.rb
+
+diff --git a/Yelp_like/app/controllers/api/v1/restaurants_controller.rb b/Yelp_like/app/controllers/api/v1/restaurants_controller.rb
+index e96963c..4f0dca3 100644
+--- a/Yelp_like/app/controllers/api/v1/restaurants_controller.rb
++++ b/Yelp_like/app/controllers/api/v1/restaurants_controller.rb
+@@ -13,7 +13,7 @@ module Api
+       # GET /api/v1/restaurants/:slug
+       def show
+         restaurant = Restaurant.find_by(slug: params[:slug])
+-        render json: RestaurantSerializer.new(restaurant, options).serialized_json
++        render json: RestaurantSerializer.new(restaurant, {}).serialized_json
+       end
+ 
+       # POST /api/v1/restaurants
+diff --git a/Yelp_like/app/controllers/api/v1/reviews_controller.rb b/Yelp_like/app/controllers/api/v1/reviews_controller.rb
+index 7d75ee0..4959878 100644
+--- a/Yelp_like/app/controllers/api/v1/reviews_controller.rb
++++ b/Yelp_like/app/controllers/api/v1/reviews_controller.rb
+@@ -5,18 +5,28 @@ module Api
+      
+       # POST /api/v1/reviews
+       def create
++        puts params
+         #review = Review.reviews.new(review_params)
+-        review = Review.new(
+-          title: params[:title],
+-          description: params[:description],
+-          score: params[:score],
+-          restaurant_id: params[:restaurant_id],
+-          user_id: session[:user_id]
+-        )
++        review = Review.create(review_params)
++        review.user_id = session[:user_id]
++        review.restaurant_id = params[:restaurant_id]
++
++        # (
++        #   title: params.review[:title],
++        #   description: params.review[:description],
++        #   score: params[:score],
++        #   restaurant_id: params[:restaurant_id],
++        #   user_id: session[:user_id]
++        # )
+ 
+         if review.save!
+           #render json: ReviewSerializer.new(reviews).serializer_json
+-          render json: { status: :success, logged_in: true }, status: 200
++          render json: { review: {
++          title: review.title,
++          description: review.description,
++          id: review.id,
++          created_at: review.created_at
++          }, status: :success, logged_in: true }, status: 200
+         else
+           render json:{error:["could not save review"]}, status: 422
+         end
+diff --git a/Yelp_like/app/javascript/components/ReviewForm.js b/Yelp_like/app/javascript/components/ReviewForm.js
+new file mode 100644
+index 0000000..7c4542a
+--- /dev/null
++++ b/Yelp_like/app/javascript/components/ReviewForm.js
+@@ -0,0 +1,17 @@
++import React from 'react'
++
++export default function ReviewForm(props) {
++  return (
++    <div className="review-form">
++      <form onSubmit={props.handleSubmit}>
++        <h3>Write your review here!</h3>
++        <input onChange={props.handleChange} value={props.review.title} type="text" name="title" placeholder="Review Title"/>
++        <input onChange={props.handleChange} value={props.review.description} type="text" name="description" placeholder="Review Description"/>
++        <div className="star-rating">
++          <div className="star-rating-title">Rate this restaurant</div>
++        </div>
++        <button type="submit">Submit your review</button>
++      </form>
++    </div>
++  )
++}
+\ No newline at end of file
+diff --git a/Yelp_like/app/javascript/packs/index.css b/Yelp_like/app/javascript/packs/index.css
+index be69ccb..5eded45 100644
+--- a/Yelp_like/app/javascript/packs/index.css
++++ b/Yelp_like/app/javascript/packs/index.css
+@@ -249,7 +249,14 @@ SingleRestaurant
+ */
+ 
+ .restaurant-image {
+-  width:fit-content
++  width: 75%;
++  height: max-height;
++  border-radius: 8px;
++}
++.column {
++  float: left;
++  width: 50%;
++  padding: 10px;
+ }
+ 
+ 
+diff --git a/Yelp_like/app/javascript/pages/SingleRestaurant.js b/Yelp_like/app/javascript/pages/SingleRestaurant.js
+index 2599c64..f445273 100644
+--- a/Yelp_like/app/javascript/pages/SingleRestaurant.js
++++ b/Yelp_like/app/javascript/pages/SingleRestaurant.js
+@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
+ import Loading from '../components/Loading'
+ import { useParams, Link } from 'react-router-dom'
+ import axios from 'axios'
++import ReviewForm from '../components/ReviewForm'
+ 
+ export default function SingleRestaurant(props) {
+   const { name, location, image_url, average_score } = props
+@@ -10,19 +11,19 @@ export default function SingleRestaurant(props) {
+   // const { id } = useParams()
+   const [loading, setLoading] = useState(false)
+ 
+-  console.log({restaurant});
++  console.log({ restaurant });
+   useEffect(() => {
+     const slug = props.match.params.slug
+     const url = `/api/v1/restaurants/${slug}`
+-    
++
+     axios.get(url)
+       .then(res => {
+         console.log("+++++++++++++", res.data.data);
+         setRestaurant(res.data.data)
+       })
+       .catch(res => console.log(res))
+-      setLoading(true)
+-    
++    setLoading(true)
++
+     // async function getRestaurant() {
+     //   try {
+     //     const response = await fetch(
+@@ -62,22 +63,55 @@ export default function SingleRestaurant(props) {
+     // getRestaurant()
+   }, [])
+ 
++  const handleChange = (event) => {
++    event.preventDefault()
++    setReview(Object.assign({}, review, { [event.target.name]: event.target.value }))
++    console.log("review:", review);
++  }
++
++  const handleSubmit = (event) => {
++    event.preventDefault()
++
++    const restaurant_id = restaurant.id
++    axios.post('/api/v1/reviews', {review, restaurant_id})
++    .then(res => {
++      const reviews = [...restaurant.reviews, res.data.review]
++      setRestaurant({...restaurant, reviews})
++      setReview({title: '', description: ''})
++    })
++    .catch(res => {})
++  }
++
+   return (
+-    <div className="box">
+-      <div className="restaurant-image">
+-        {!restaurant.attributes ? null : (
+-        <img src={restaurant.attributes.image_url} alt={restaurant.attributes.name} width={250} height={300} />
+-        )}
+-      </div>
+-      {!restaurant.attributes ? null : (
+-        <div>
+-          <div className="restaurant-name">{restaurant.attributes.name}</div>
+-          <div className="restaurant-location">{restaurant.attributes.location}</div>
+-      <div className="average-score">{restaurant.attributes.average_score}</div>
++    <>
++      <div className="single-restaurant-page">
++        <div className="column">
++          <div className="restaurant-data">
++            <div className="restaurant-image">
++              {!restaurant.attributes ? null : (
++                <img src={restaurant.attributes.image_url} alt={restaurant.attributes.name} width={250} height={300} />
++              )}
++            </div>
++            {!restaurant.attributes ? null : (
++              <div>
++                <div className="restaurant-name">{restaurant.attributes.name}</div>
++                <div className="restaurant-location">{restaurant.attributes.location}</div>
++                <div className="average-score">{restaurant.attributes.average_score}</div>
++              </div>
++            )}
++          </div>
+         </div>
+-      )}
+-
+-    </div>
++        <div className="column">
++          <div className="review-form">
++            <ReviewForm
++              handleChange={handleChange}
++              handleSubmit={handleSubmit}
++              attributes={restaurant.attributes}
++              review={review} />
++          </div>
++        </div>
++      </div>
++    </>
+   )
+ 
+   // if (loading) {
+diff --git a/Yelp_like/db/migrate/20211125204519_add_user_id_to_reviews.rb b/Yelp_like/db/migrate/20211125204519_add_user_id_to_reviews.rb
+new file mode 100644
+index 0000000..386b1f3
+--- /dev/null
++++ b/Yelp_like/db/migrate/20211125204519_add_user_id_to_reviews.rb
+@@ -0,0 +1,5 @@
++class AddUserIdToReviews < ActiveRecord::Migration[6.1]
++  def change
++    add_column :reviews, :user_id, :integer
++  end
++end
+diff --git a/Yelp_like/db/migrate/add_average_to_restaurants.rb b/Yelp_like/db/migrate/add_average_to_restaurants.rb
+index 6e2c012..71afd38 100644
+--- a/Yelp_like/db/migrate/add_average_to_restaurants.rb
++++ b/Yelp_like/db/migrate/add_average_to_restaurants.rb
+@@ -2,6 +2,6 @@
+    
+ class AddAverageToRestaurants < ActiveRecord::Migration[6.1]
+   def change
+-    add_column :airlines, :average_score, :integer, default: 0 
++    add_column :restaurants, :average_score, :integer, default: 0 
+   end
+ end
+\ No newline at end of file
+diff --git a/Yelp_like/db/schema.rb b/Yelp_like/db/schema.rb
+index de38a4b..f12fe72 100644
+--- a/Yelp_like/db/schema.rb
++++ b/Yelp_like/db/schema.rb
+@@ -10,7 +10,7 @@
+ #
+ # It's strongly recommended that you check this file into your version control system.
+ 
+-ActiveRecord::Schema.define(version: 2021_11_20_183800) do
++ActiveRecord::Schema.define(version: 2021_11_25_204519) do
+ 
+   create_table "restaurants", force: :cascade do |t|
+     t.string "name"
+@@ -25,13 +25,13 @@ ActiveRecord::Schema.define(version: 2021_11_20_183800) do
+   create_table "reviews", force: :cascade do |t|
+     t.string "title"
+     t.string "description"
+-    t.integer "score"
++    t.string "score"
++    t.string "interger"
+     t.integer "restaurant_id", null: false
+-    t.integer "user_id", null: false
+     t.datetime "created_at", precision: 6, null: false
+     t.datetime "updated_at", precision: 6, null: false
++    t.integer "user_id"
+     t.index ["restaurant_id"], name: "index_reviews_on_restaurant_id"
+-    t.index ["user_id"], name: "index_reviews_on_user_id"
+   end
+ 
+   create_table "users", force: :cascade do |t|
+@@ -42,5 +42,4 @@ ActiveRecord::Schema.define(version: 2021_11_20_183800) do
+   end
+ 
+   add_foreign_key "reviews", "restaurants"
+-  add_foreign_key "reviews", "users"
+ end
+-- 
+2.30.1 (Apple Git-130)
+

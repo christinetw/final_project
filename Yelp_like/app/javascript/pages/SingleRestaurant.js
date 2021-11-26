@@ -3,7 +3,8 @@ import Loading from '../components/Loading'
 import { useParams, Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
 import { useGlobalContext } from '../components/context'
-// import Rating from '../components/rating/rating';
+import Rating from '../components/rating/rating';
+import ReviewForm from '../components/ReviewForm'
 
 export default function SingleRestaurant(props) {
   const { name, location, image_url, average_score } = props
@@ -23,7 +24,7 @@ export default function SingleRestaurant(props) {
 
     axios.get(url)
       .then(res => {
-        console.log("+++++++++++++", res.data.data);
+        console.log("", res.data.data);
         setRestaurant(res.data.data)
       })
       .catch(res => console.log(res))
@@ -68,23 +69,75 @@ export default function SingleRestaurant(props) {
     // getRestaurant()
   }, [])
 
-  return (
-    <div className="box">
-      <div className="restaurant-image">
-        {!restaurant.attributes ? null : (
-          <img src={restaurant.attributes.image_url} alt={restaurant.attributes.name} width={250} height={300} />
-        )}
-      </div>
-      {!restaurant.attributes ? null : (
-        <div>
-          <div className="restaurant-name">{restaurant.attributes.name}</div>
-          <div className="restaurant-location">{restaurant.attributes.location}</div>
-          {/* <div className="average-score"> <Rating score={restaurant.attributes.average_score} /></div> */}
-        </div>
-      )}
+  const handleChange = (event) => {
+    event.preventDefault()
+    setReview(Object.assign({}, review, { [event.target.name]: event.target.value }))
+    console.log("review:", review);
+  }
 
-    </div>
-  )
+  const handleSubmit = (event) => {
+    event.preventDefault()
+
+    const restaurant_id = restaurant.id
+    axios.post('/api/v1/reviews', { review, restaurant_id })
+      .then(res => {
+        const reviews = [...restaurant.reviews, res.data.review]
+        setRestaurant({ ...restaurant, reviews })
+        setReview({ title: '', description: '' })
+      })
+      .catch(res => { })
+  }
+
+
+
+  return (
+    <>
+      <div className="single-restaurant-page">
+        <div className="column">
+          <div className="restaurant-data">
+            <div className="restaurant-image">
+              {!restaurant.attributes ? null : (
+                <img src={restaurant.attributes.image_url} alt={restaurant.attributes.name} width={250} height={300} />
+              )}
+            </div>
+            {!restaurant.attributes ? null : (
+              <div>
+                <div className="restaurant-name">{restaurant.attributes.name}</div>
+                <div className="restaurant-location">{restaurant.attributes.location}</div>
+                <div className="average-score">{restaurant.attributes.average_score}</div>
+                <div className="average-score"> <Rating score={restaurant.attributes.average_score} /></div>
+              </div>
+            )}
+          </div>
+
+        </div>
+        <div className="column">
+          <div className="review-form">
+            <ReviewForm
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+              attributes={restaurant.attributes}
+              review={review} />
+          </div>
+        </div>
+      </div>
+    </>
+  //   <div className="box">
+  //     <div className="restaurant-image">
+  //       {!restaurant.attributes ? null : (
+  //         <img src={restaurant.attributes.image_url} alt={restaurant.attributes.name} width={250} height={300} />
+  //       )}
+  //     </div>
+  //     {!restaurant.attributes ? null : (
+  //       <div>
+  //         <div className="restaurant-name">{restaurant.attributes.name}</div>
+  //         <div className="restaurant-location">{restaurant.attributes.location}</div>
+  //         {/* <div className="average-score"> <Rating score={restaurant.attributes.average_score} /></div> */}
+  //       </div>
+  //     )}
+
+  //   </div>
+  // )
 
   // if (loading) {
   //   return <Loading />
@@ -115,4 +168,4 @@ export default function SingleRestaurant(props) {
   //     </section>
   //   )
   // }
-}
+  )}
