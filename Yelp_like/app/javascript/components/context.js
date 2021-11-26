@@ -20,7 +20,7 @@ const AppProvider = ({ children }) => {
 
       //console.log("data ", data);
 
-      const restaurants1 = data.filter((restaurant) => restaurant.name.includes(searchTerm))
+      const restaurants1 = data.filter((restaurant) => restaurant.name.toLowerCase().includes(searchTerm.toLowerCase()))
       let restaurants = [];
       let found = false;
       restaurants1.forEach((element, index) => {
