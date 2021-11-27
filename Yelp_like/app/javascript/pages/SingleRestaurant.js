@@ -9,7 +9,7 @@ import ReviewForm from '../components/ReviewForm'
 export default function SingleRestaurant(props) {
   const { name, location, image_url, average_score } = props
   const [restaurant, setRestaurant] = useState({})
-  const [review, setReview] = useState([])
+  const [review, setReview] = useState({})
   // const { id } = useParams()
   const [loading, setLoading] = useState(false)
   let { isLoggedIn, setIsLoggedIn } = useGlobalContext()
@@ -70,9 +70,13 @@ export default function SingleRestaurant(props) {
   }, [])
 
   const handleChange = (event) => {
-    event.preventDefault()
-    setReview(Object.assign({}, review, { [event.target.name]: event.target.value }))
+    // event.preventDefault()
+    setReview({...review, [event.target.name]: event.target.value })
     console.log("review:", review);
+  }
+
+  const handleRating = (newRating) => {
+    setReview({...review,  score: newRating })
   }
 
   const handleSubmit = (event) => {
@@ -83,7 +87,7 @@ export default function SingleRestaurant(props) {
       .then(res => {
         const reviews = [...restaurant.reviews, res.data.review]
         setRestaurant({ ...restaurant, reviews })
-        setReview({ title: '', description: '' })
+        setReview({ title: '', description: '', score: 0 })
       })
       .catch(res => { })
   }
@@ -105,7 +109,7 @@ export default function SingleRestaurant(props) {
                 <div className="restaurant-name">{restaurant.attributes.name}</div>
                 <div className="restaurant-location">{restaurant.attributes.location}</div>
                 <div className="average-score">{restaurant.attributes.average_score}</div>
-                <div className="average-score"> <Rating score={restaurant.attributes.average_score} /></div>
+                <div className="star-rating"> <Rating score={restaurant.attributes.average_score} /></div>
               </div>
             )}
           </div>
@@ -116,6 +120,7 @@ export default function SingleRestaurant(props) {
             <ReviewForm
               handleChange={handleChange}
               handleSubmit={handleSubmit}
+              handleRating={handleRating}
               attributes={restaurant.attributes}
               review={review} />
           </div>

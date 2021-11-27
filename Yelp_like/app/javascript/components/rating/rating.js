@@ -1,10 +1,12 @@
 import React from 'react'
 //import './rating.css'
 import ReactStars from "react-rating-stars-component";
+
 const Rating = (props) => {
   // console.log(props.score);
   const ratingChanged = (newRating) => {
     console.log(newRating);
+    props.onChange && props.onChange(newRating)
   };
   return (
     <ReactStars

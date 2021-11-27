@@ -20,12 +20,21 @@ module Api
 
         if review.save!
           #render json: ReviewSerializer.new(reviews).serializer_json
-          render json: { review: {
-          title: review.title,
-          description: review.description,
-          id: review.id,
-          created_at: review.created_at
-          }, status: :success, logged_in: true }, status: 200
+          restaurant = Restaurant.find review.restaurant_id
+          restaurant.calculate_average
+
+          render json: { 
+            review: {
+              title: review.title,
+              description: review.description,
+              score: review.score,
+              id: review.id,
+              created_at: review.created_at
+            }, 
+            status: :success, 
+            logged_in: true
+          }, status: 200
+
         else
           render json:{error:["could not save review"]}, status: 422
         end
