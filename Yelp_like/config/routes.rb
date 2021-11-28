@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :restaurants, param: :slug
-      resources :reviews, only: %i[create destroy]
+      resources :reviews
       resources :auth, only: %i[create] do
         collection do
           post 'password/forgot', to: 'auth#forgot_password'
