@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import logo from '../logo.svg'
 import { useGlobalContext } from './context'
+import { ACCESS_TOKEN_NAME } from '../constants/apiConstants';
 
 export default function Navbar(props) {
 
@@ -10,6 +11,15 @@ export default function Navbar(props) {
   let { isLoggedIn, setIsLoggedIn } = useGlobalContext()
   //console.log("SACHNAV ", props.title, location.pathname, isLoggedIn);
 
+  localStorage.getItem(ACCESS_TOKEN_NAME)
+  //console.log("tok ", localStorage.getItem(ACCESS_TOKEN_NAME))
+  //  console.log("In NAvbar", isLoggedIn)
+  useEffect(() => {
+    //  console.log("In useEffect", isLoggedIn)
+    if (localStorage.getItem(ACCESS_TOKEN_NAME) === "response.data.token")
+      setIsLoggedIn(true);
+  }
+    , [])
 
   function renderLogout() {
 
@@ -37,6 +47,7 @@ export default function Navbar(props) {
     // localStorage.removeItem(ACCESS_TOKEN_NAME)
     // console.log("IN handleLogout");
     setIsLoggedIn(false)
+    localStorage.setItem(ACCESS_TOKEN_NAME, "");
     history.push('/')
   }
   return (
