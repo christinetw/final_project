@@ -160,8 +160,7 @@ return (
         
             />
         </div>
-        <div className={userReviews}> 
-        </div>
+        
         
       </div>
     </div>

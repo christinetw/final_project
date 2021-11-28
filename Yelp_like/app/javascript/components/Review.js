@@ -7,7 +7,9 @@ const Review = (props) => {
   return (
     <div className="card">
       <div className='rating_score'>
-        <div className='rating score'> </div>
+        <div className='rating score'> 
+        <Rating score={props.score}/>
+        </div>
 
       </div>
       <div className='Title'>{props.title} </div>
