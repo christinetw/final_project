@@ -105,7 +105,7 @@ export default function SingleRestaurant(props) {
                 <div className="restaurant-name">{restaurant.attributes.name}</div>
                 <div className="restaurant-location">{restaurant.attributes.location}</div>
                 <div className="average-score">{restaurant.attributes.average_score}</div>
-                <div className="average-score"> <Rating score={restaurant.attributes.average_score*100} /></div>
+                <div className="average-score"> <Rating score={restaurant.attributes.average_score} /></div>
               </div>
             )}
           </div>
