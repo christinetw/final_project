@@ -3,6 +3,17 @@ module Api
     class ReviewsController < ApiController
       #protect_from_forgery with :null_session
      
+      def index
+        if params[:id]
+          reviews = Review.where(restaurant_id: params[:id])
+          render json: reviews, status: :ok
+        else
+          reviews = Review.order('created_at');
+          render json: {reviews: reviews}, status: :ok
+        end
+        #restaurant_id
+      end     
+
       # POST /api/v1/reviews
       def create
         #review = Review.reviews.new(review_params)
@@ -16,7 +27,7 @@ module Api
 
         if review.save!
           #render json: ReviewSerializer.new(reviews).serializer_json
-          render json: { status: :success, logged_in: true }, status: 200
+          render json: review, status: 200
         else
           render json:{error:["could not save review"]}, status: 422
         end

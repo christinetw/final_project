@@ -13,7 +13,7 @@ module Api
       # GET /api/v1/restaurants/:slug
       def show
         restaurant = Restaurant.find_by(slug: params[:slug])
-        render json: RestaurantSerializer.new(restaurant, options).serialized_json
+        render json: RestaurantSerializer.new(restaurant, {}).serialized_json
       end
 
       # POST /api/v1/restaurants
