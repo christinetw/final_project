@@ -10,6 +10,7 @@ const Rating = (props) => {
       value={props.score}
       onChange={props.ratingChanged}
       size={24}
+      isHalf={true}
       activeColor="#ffd700"
     />
   )

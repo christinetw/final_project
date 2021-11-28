@@ -12,7 +12,7 @@ export default function SingleRestaurant(props) {
   const { name, location, image_url, average_score } = props
   const [restaurant, setRestaurant] = useState({})
   const [review, setReview] = useState({ title: '', description: '', score: 0 })
-  const [reviews,setReviews] = useState([])
+  const [reviews, setReviews] = useState([])
   // const { id } = useParams()
   const [loaded, setLoaded] = useState(false)
   let { isLoggedIn, setIsLoggedIn } = useGlobalContext()
@@ -29,18 +29,18 @@ export default function SingleRestaurant(props) {
       .then(res => {
         //console.log("", res.data.data);
         setRestaurant(res.data.data)
-        
+
         axios.get('/api/v1/reviews?id=' + res.data.data.id)
-        .then(res => {
-          setReviews(res.data)
-          //console.log("reviews2 = " + JSON.stringify(res.data))
-        })
+          .then(res => {
+            setReviews(res.data)
+            console.log("reviews2 = " + JSON.stringify(res.data))
+          })
         //console.log("data = " + JSON.stringify(res.data.data));
       })
       .catch(res => console.log(res))
     setLoaded(true)
 
-    
+
   }, [])
 
   const handleChange = (event) => {
@@ -63,68 +63,75 @@ export default function SingleRestaurant(props) {
       })
       .catch(res => { })
   }
-// set score
-const setRating = (score) => {
-  setReview({ ...review, score })
-}
+  // set score
+  const setRating = (score) => {
+    setReview({ ...review, score })
+  }
 
-let total, average = 0
-let userReviews
+  let total, average = 0
+  let userReviews
 
-if (reviews) {
-  //console.log("reviews here = " + JSON.stringify(reviews));
-  //console.log("review count = " + reviews.length);
-  total = reviews.reduce((total, review) => total + review.score, 0)
-  average = total > 0 ? (parseFloat(total) / parseFloat(reviews.length)) : 0
-  userReviews = reviews.map( (review, index) => {
-    //console.log("review = " + reviews);
-    return (
-      <Review 
-        title={review.title}
-        description={review.description}
-        score={review.score}
-        key={index}
-        id={review.id}
+  if (reviews) {
+    //console.log("reviews here = " + JSON.stringify(reviews));
+    //console.log("review count = " + reviews.length);
+    total = reviews.reduce((total, review) => total + review.score, 0)
+    average = total > 0 ? (parseFloat(total) / parseFloat(reviews.length)) : 0
+    userReviews = reviews.map((review, index) => {
+      //console.log("review = " + reviews);
+      return (
+        <Review
+          title={review.title}
+          description={review.description}
+          score={review.score}
+          key={index}
+          id={review.id}
         //attributes={review.attributes}
-      />
-    )
-  })
-}
-
-return (
-  <>
-    <div className="single-restaurant-page">
-      <div className="column">
-        <div className="restaurant-data">
-          <div className="restaurant-image">
+        />
+      )
+    })
+  }
+/*
+ 4+4+4 =  12/3 = 4
+ 2+2+2 = 6/3 = 3
+ 18/6 =  3 
+ 1+1 = 2/2 = 1 
+ 20/8 = 2.5
+*/
+  return (
+    <>
+      <div className="single-restaurant-page">
+        <div className="column">
+          <div className="restaurant-data">
+            <div className="restaurant-image">
+              {!restaurant.attributes ? null : (
+                <img src={restaurant.attributes.image_url} alt={restaurant.attributes.name} width={250} height={300} />
+              )}
+            </div>
             {!restaurant.attributes ? null : (
-              <img src={restaurant.attributes.image_url} alt={restaurant.attributes.name} width={250} height={300} />
+              <div>
+                <div className="restaurant-name">{restaurant.attributes.name}</div>
+                <div className="restaurant-location">{restaurant.attributes.location}</div>
+                <div className="average-score"> <Rating score={restaurant.attributes.average_score} canEdit={false} /></div>
+              </div>
             )}
           </div>
-          {!restaurant.attributes ? null : (
-            <div>
-              <div className="restaurant-name">{restaurant.attributes.name}</div>
-              <div className="restaurant-location">{restaurant.attributes.location}</div>
-              <div className="average-score"> <Rating score={restaurant.attributes.average_score*100} canEdit={false}/></div>
-            </div>
-          )}
+          {userReviews}
         </div>
-             {userReviews}
-      </div>
-      <div className="column">
-        <div className="review-form">
-          <ReviewForm
-            name={restaurant?.attributes?.name}
-            review={review}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            setRating={setRating}
-        
+        <div className="column">
+          <div className="review-form">
+            <ReviewForm
+              name={restaurant?.attributes?.name}
+              review={review}
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+              setRating={setRating}
+
             />
+          </div>
+
+
         </div>
-        
-        
       </div>
-    </div>
-  </>
-)}
+    </>
+  )
+}
