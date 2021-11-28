@@ -82,19 +82,17 @@ export default function SingleRestaurant(props) {
   const handleChange = (event) => {
     event.preventDefault()
     setReview(Object.assign({}, review, { [event.target.name]: event.target.value }))
-    console.log("review:", review);
-
   }
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log("handleSubmit");
+    //console.log("handleSubmit");
     const restaurant_id = restaurant.id
     axios.post('/api/v1/reviews', { ...review, restaurant_id })
       .then(res => {
         //console.log("post review = " + JSON.stringify(reviews));
         //const reviews = [...restaurant.reviews, res.data.review]
-        console.log("new review = " + JSON.stringify(res.data));
+        //console.log("new review = " + JSON.stringify(res.data));
         setReviews([...reviews, res.data]);
         //setRestaurant({ ...restaurant, reviews })
         //setReview({ title: '', description: '' , score: 0 })
@@ -102,8 +100,7 @@ export default function SingleRestaurant(props) {
       .catch(res => { })
   }
 // set score
-const setRating = (score, e) => {
-  e.preventDefault()  
+const setRating = (score) => {
   setReview({ ...review, score })
 }
 
@@ -146,7 +143,7 @@ return (
             <div>
               <div className="restaurant-name">{restaurant.attributes.name}</div>
               <div className="restaurant-location">{restaurant.attributes.location}</div>
-              <div className="average-score"> <Rating score={restaurant.attributes.average_score*100} /></div>
+              <div className="average-score"> <Rating score={restaurant.attributes.average_score*100} canEdit={false}/></div>
             </div>
           )}
         </div>

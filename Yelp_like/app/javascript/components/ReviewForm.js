@@ -1,6 +1,7 @@
 import React from 'react';
 import { Fragment } from 'react';
-
+import Rating from './rating/rating'
+  
   const ReviewForm = (props) =>{
 //    console.log("properties = " + JSON.stringify(props));
     const ratingOptions = [5,4,3,2,1].map((score, index) => {
@@ -20,7 +21,7 @@ import { Fragment } from 'react';
         <input onChange={props.handleChange} type="text" name="description" placeholder="Review Description" value={props.review.description}/>
         <div className="star-rating">
           <div className="star-rating-title">Rate this restaurant</div>
-          <div>{ratingOptions}</div>
+          <Rating ratingChanged={props.setRating}/>
         </div>
         <button type="submit">Submit your review</button>
       </form>

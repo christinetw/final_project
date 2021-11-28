@@ -3,14 +3,12 @@ import React from 'react'
 import ReactStars from "react-rating-stars-component";
 const Rating = (props) => {
   // console.log(props.score);
-  const ratingChanged = (newRating) => {
-    console.log(newRating);
-  };
   return (
     <ReactStars
       count={5}
+      edit={props.canEdit}
       value={props.score}
-      onChange={ratingChanged}
+      onChange={props.ratingChanged}
       size={24}
       activeColor="#ffd700"
     />
