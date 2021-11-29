@@ -103,7 +103,7 @@ export default function SingleRestaurant(props) {
           <div className="restaurant-data">
             {!restaurant.attributes ? null : (
               <div>
-                <div className="restaurant-name"><h1>{restaurant.attributes.name}</h1></div>
+                <div className="restaurant-name">{restaurant.attributes.name}</div>
                 <div className="restaurant-location">{restaurant.attributes.location}</div>
                 <div className="average-score"> <Rating score={restaurant.attributes.average_score} canEdit={false} /></div>
               </div>
@@ -116,7 +116,7 @@ export default function SingleRestaurant(props) {
           </div>
           <br />
           <div className="reviews">
-            <h4>Restaurant Reviews</h4>
+            <h3>Restaurant Reviews</h3>
             <br />
             {userReviews}
           </div>

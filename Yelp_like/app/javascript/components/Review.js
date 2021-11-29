@@ -6,6 +6,7 @@ const Review = (props) => {
 
   return (
     <div className="card">
+      <br />
       <div className='rating_score'>
         <div className='rating score'> 
         <Rating score={props.score}/>
@@ -15,6 +16,7 @@ const Review = (props) => {
       <div className='title'><h4>{props.title} </h4></div>
       <div className='description'><h6>{props.description}</h6> </div>
       <div className='date'>{props.created_at} </div>
+      <br />
     </div>
 
   )

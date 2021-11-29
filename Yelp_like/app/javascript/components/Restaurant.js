@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import Rating from './rating/rating';
+
 export default function Restaurant({ image_url, name, location, average_score, slug }) {
 
   let imageSrc = "https://maps.googleapis.com/maps/api/staticmap?markers=";

@@ -273,6 +273,10 @@ SingleRestaurant
   box-sizing: border-box;
 }
 
+.restaurant-name {
+  font-size: 50px;
+}
+
 
 
 

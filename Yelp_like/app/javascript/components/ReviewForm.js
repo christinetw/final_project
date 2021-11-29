@@ -1,7 +1,8 @@
 import React from 'react';
 import { Fragment } from 'react';
 import Rating from './rating/rating'
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
+import { Button } from 'react-bootstrap';
 
 const ReviewForm = (props) => {
   //    console.log("properties = " + JSON.stringify(props));
