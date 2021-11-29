@@ -78,6 +78,7 @@ export default function SingleRestaurant(props) {
           title={review.title}
           description={review.description}
           score={review.score}
+          create_at={review.created_at}
           key={index}
           id={review.id}
         //attributes={review.attributes}
@@ -97,20 +98,25 @@ export default function SingleRestaurant(props) {
       <div className="single-restaurant-page">
         <div className="column">
           <div className="restaurant-data">
+            {!restaurant.attributes ? null : (
+              <div>
+                <div className="restaurant-name"><h1>{restaurant.attributes.name}</h1></div>
+                <div className="restaurant-location">{restaurant.attributes.location}</div>
+                <div className="average-score"> <Rating score={restaurant.attributes.average_score} canEdit={false} /></div>
+              </div>
+            )}
             <div className="restaurant-image">
               {!restaurant.attributes ? null : (
                 <img src={restaurant.attributes.image_url} alt={restaurant.attributes.name} width={250} height={300} />
               )}
             </div>
-            {!restaurant.attributes ? null : (
-              <div>
-                <div className="restaurant-name">{restaurant.attributes.name}</div>
-                <div className="restaurant-location">{restaurant.attributes.location}</div>
-                <div className="average-score"> <Rating score={restaurant.attributes.average_score} canEdit={false} /></div>
-              </div>
-            )}
           </div>
-          {userReviews}
+          <br />
+          <div className="reviews">
+            <h4>Restaurant Reviews</h4>
+            <br />
+            {userReviews}
+          </div>
         </div>
         <div className="column">
           <div className="review-form">

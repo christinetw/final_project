@@ -2,7 +2,7 @@ import React from 'react'
 import Rating from './rating/rating'
 
 const Review = (props) => {
-  const { title, description, score } = props
+  const { title, description, score, created_at} = props
 
   return (
     <div className="card">
@@ -12,8 +12,9 @@ const Review = (props) => {
         </div>
 
       </div>
-      <div className='Title'>{props.title} </div>
-      <div className='description'>{props.description} </div>
+      <div className='title'><h4>{props.title} </h4></div>
+      <div className='description'><h6>{props.description}</h6> </div>
+      <div className='date'>{props.created_at} </div>
     </div>
 
   )
