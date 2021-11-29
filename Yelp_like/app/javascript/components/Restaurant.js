@@ -16,7 +16,7 @@ export default function Restaurant({ image_url, name, location, average_score, s
       </div>
       
       <div className='rest-footer'>
-      <h3><Rating score={average_score} canEdit={false} /></h3>
+      <h3><Rating score={average_score / 100} canEdit={false} /></h3>
         <h4>{name}</h4>
         
         <p>{location}</p>

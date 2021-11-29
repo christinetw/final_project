@@ -20,22 +20,18 @@ export default function SingleRestaurant(props) {
     return <Redirect to='/login' />
   }
 
-  //console.log({ restaurant });
   useEffect(() => {
     const slug = props.match.params.slug
     const url = `/api/v1/restaurants/${slug}`
 
     axios.get(url)
       .then(res => {
-        //console.log("", res.data.data);
         setRestaurant(res.data.data)
 
         axios.get('/api/v1/reviews?id=' + res.data.data.id)
           .then(res => {
             setReviews(res.data)
-            console.log("reviews2 = " + JSON.stringify(res.data))
           })
-        //console.log("data = " + JSON.stringify(res.data.data));
       })
       .catch(res => console.log(res))
     setLoaded(true)
@@ -50,16 +46,18 @@ export default function SingleRestaurant(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    //console.log("handleSubmit");
     const restaurant_id = restaurant.id
     axios.post('/api/v1/reviews', { ...review, restaurant_id })
       .then(res => {
-        //console.log("post review = " + JSON.stringify(reviews));
-        //const reviews = [...restaurant.reviews, res.data.review]
-        //console.log("new review = " + JSON.stringify(res.data));
         setReviews([...reviews, res.data]);
-        //setRestaurant({ ...restaurant, reviews })
-        //setReview({ title: '', description: '' , score: 0 })
+
+        const slug = props.match.params.slug
+        const url = `/api/v1/restaurants/${slug}`
+        axios.get(url)
+          .then(res => {
+            setRestaurant(res.data.data)
+          })
+          .catch(res => console.log(res))
       })
       .catch(res => { })
   }
@@ -72,12 +70,9 @@ export default function SingleRestaurant(props) {
   let userReviews
 
   if (reviews) {
-    //console.log("reviews here = " + JSON.stringify(reviews));
-    //console.log("review count = " + reviews.length);
     total = reviews.reduce((total, review) => total + review.score, 0)
     average = total > 0 ? (parseFloat(total) / parseFloat(reviews.length)) : 0
     userReviews = reviews.map((review, index) => {
-      //console.log("review = " + reviews);
       return (
         <Review
           title={review.title}
@@ -90,13 +85,13 @@ export default function SingleRestaurant(props) {
       )
     })
   }
-/*
- 4+4+4 =  12/3 = 4
- 2+2+2 = 6/3 = 3
- 18/6 =  3 
- 1+1 = 2/2 = 1 
- 20/8 = 2.5
-*/
+  /*
+   4+4+4 =  12/3 = 4
+   2+2+2 = 6/3 = 3
+   18/6 =  3 
+   1+1 = 2/2 = 1 
+   20/8 = 2.5
+  */
   return (
     <>
       <div className="single-restaurant-page">
@@ -128,8 +123,6 @@ export default function SingleRestaurant(props) {
 
             />
           </div>
-
-
         </div>
       </div>
     </>
