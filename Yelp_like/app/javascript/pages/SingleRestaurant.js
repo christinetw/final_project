@@ -7,6 +7,7 @@ import Rating from '../components/rating/rating';
 import ReviewForm from '../components/ReviewForm';
 import Review from '../components/Review';
 import Header from '../components/Header';
+import { ACCESS_TOKEN_NAME } from '../constants/apiConstants';
 
 export default function SingleRestaurant(props) {
   const { name, location, image_url, average_score } = props
@@ -16,7 +17,9 @@ export default function SingleRestaurant(props) {
   // const { id } = useParams()
   const [loaded, setLoaded] = useState(false)
   let { isLoggedIn, setIsLoggedIn } = useGlobalContext()
-  if (!isLoggedIn) {
+  //console.log("SR ", isLoggedIn);
+
+  if (!isLoggedIn && (localStorage.getItem(ACCESS_TOKEN_NAME) !== "response.data.token")) {
     return <Redirect to='/login' />
   }
 
