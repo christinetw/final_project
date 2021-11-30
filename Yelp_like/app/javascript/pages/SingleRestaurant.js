@@ -50,7 +50,8 @@ export default function SingleRestaurant(props) {
     axios.post('/api/v1/reviews', { ...review, restaurant_id })
       .then(res => {
         setReviews([...reviews, res.data]);
-
+         //setRestaurant({ ...restaurant, reviews })
+        //setReview({ title: '', description: '' , score: 0 })
         const slug = props.match.params.slug
         const url = `/api/v1/restaurants/${slug}`
         axios.get(url)
@@ -61,6 +62,25 @@ export default function SingleRestaurant(props) {
       })
       .catch(res => { })
   }
+
+  // destory a reviews
+  const handleDestroy = (id, e) => {
+    e.preventDefault()
+
+    axios.delete(`/api/v1/reviews/${id}`)
+    .then( (data) => {
+      const included = [...reviews]
+      const index = included.findIndex( (data) => data.id == id )
+      included.splice(index, 1)
+
+      setReviews(included)
+    })
+    .catch( data => console.log('Error', data) )
+  }
+
+
+
+
   // set score
   const setRating = (score) => {
     setReview({ ...review, score })
@@ -80,6 +100,7 @@ export default function SingleRestaurant(props) {
           score={review.score}
           key={index}
           id={review.id}
+          handleDestroy={handleDestroy}
         //attributes={review.attributes}
         />
       )
@@ -120,6 +141,7 @@ export default function SingleRestaurant(props) {
               handleChange={handleChange}
               handleSubmit={handleSubmit}
               setRating={setRating}
+              
 
             />
           </div>

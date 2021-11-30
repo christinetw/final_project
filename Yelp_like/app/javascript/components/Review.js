@@ -2,7 +2,7 @@ import React from 'react'
 import Rating from './rating/rating'
 
 const Review = (props) => {
-  const { title, description, score } = props
+  const { title, description, score,handleDestroy } = props
 
   return (
     <div className="card">
@@ -14,6 +14,9 @@ const Review = (props) => {
       </div>
       <div className='Title'>{props.title} </div>
       <div className='description'>{props.description} </div>
+      <button onClick={props.handleDestroy.bind(this, props.id)}>Delete
+              
+     </button>
     </div>
 
   )
