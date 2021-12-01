@@ -6,7 +6,7 @@ import { useGlobalContext } from '../components/context'
 import Rating from '../components/rating/rating';
 import ReviewForm from '../components/ReviewForm';
 import Review from '../components/Review';
-import Header from '../components/Header';
+
 import { ACCESS_TOKEN_NAME } from '../constants/apiConstants';
 
 export default function SingleRestaurant(props) {
@@ -30,7 +30,7 @@ export default function SingleRestaurant(props) {
     axios.get(url)
       .then(res => {
         setRestaurant(res.data.data)
-
+       
         axios.get('/api/v1/reviews?id=' + res.data.data.id)
           .then(res => {
             setReviews(res.data)
@@ -53,7 +53,8 @@ export default function SingleRestaurant(props) {
     axios.post('/api/v1/reviews', { ...review, restaurant_id })
       .then(res => {
         setReviews([...reviews, res.data]);
-
+         //setRestaurant({ ...restaurant, reviews })
+        //setReview({ title: '', description: '' , score: 0 })
         const slug = props.match.params.slug
         const url = `/api/v1/restaurants/${slug}`
         axios.get(url)
@@ -64,6 +65,25 @@ export default function SingleRestaurant(props) {
       })
       .catch(res => { })
   }
+
+  // destory a reviews
+  const handleDestroy = (id, e) => {
+    e.preventDefault()
+
+    axios.delete(`/api/v1/reviews/${id}`)
+    .then( (data) => {
+      const included = [...reviews]
+      const index = included.findIndex( (data) => data.id == id )
+      included.splice(index, 1)
+
+      setReviews(included)
+    })
+    .catch( data => console.log('Error', data) )
+  }
+
+
+
+
   // set score
   const setRating = (score) => {
     setReview({ ...review, score })
@@ -84,6 +104,7 @@ export default function SingleRestaurant(props) {
           create_at={review.created_at}
           key={index}
           id={review.id}
+          handleDestroy={handleDestroy}
         //attributes={review.attributes}
         />
       )
@@ -96,6 +117,9 @@ export default function SingleRestaurant(props) {
    1+1 = 2/2 = 1 
    20/8 = 2.5
   */
+
+
+
   return (
     <>
       <div className="single-restaurant-page">
@@ -111,7 +135,11 @@ export default function SingleRestaurant(props) {
             <div className="restaurant-image">
               {!restaurant.attributes ? null : (
                 <img src={restaurant.attributes.image_url} alt={restaurant.attributes.name} width={250} height={300} />
-              )}
+
+                 )}
+
+                 <div>{restaurant?.attributes?.location}</div>
+              
             </div>
           </div>
           <br />
@@ -129,6 +157,7 @@ export default function SingleRestaurant(props) {
               handleChange={handleChange}
               handleSubmit={handleSubmit}
               setRating={setRating}
+              
 
             />
           </div>

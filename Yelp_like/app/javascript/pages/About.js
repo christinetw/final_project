@@ -5,10 +5,9 @@ export default function About() {
     <section className="section about-section">
       <h1 className="section-title">about us</h1>
       <p>
-        YelpLike develops, hosts, and markets the YelpLike.com website,
-        which publish crowd-sourced reviews about businesses. 
-        It also operates Yelp Reservations, a table reservation service. 
-        It is headquartered in Ottawa, Canada.
+      Yelp-like restaurant rating and review websites allow users to 
+      register and then search for and rate restaurants in the system 
+      along with review comments. 
       </p>
     </section>
   );
