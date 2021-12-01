@@ -9,7 +9,7 @@ const Rating = (props) => {
       edit={props.canEdit}
       value={props.score}
       onChange={props.ratingChanged}
-      size={24}
+      size={17}
       isHalf={true}
       activeColor="#ffd700"
     />

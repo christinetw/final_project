@@ -30,7 +30,7 @@ export default function SingleRestaurant(props) {
     axios.get(url)
       .then(res => {
         setRestaurant(res.data.data)
-       
+
         axios.get('/api/v1/reviews?id=' + res.data.data.id)
           .then(res => {
             setReviews(res.data)
@@ -48,12 +48,12 @@ export default function SingleRestaurant(props) {
   }
 
   const handleSubmit = (event) => {
-    event.preventDefault()
+    // event.preventDefault()
     const restaurant_id = restaurant.id
     axios.post('/api/v1/reviews', { ...review, restaurant_id })
       .then(res => {
         setReviews([...reviews, res.data]);
-         //setRestaurant({ ...restaurant, reviews })
+        //setRestaurant({ ...restaurant, reviews })
         //setReview({ title: '', description: '' , score: 0 })
         const slug = props.match.params.slug
         const url = `/api/v1/restaurants/${slug}`
@@ -71,14 +71,14 @@ export default function SingleRestaurant(props) {
     e.preventDefault()
 
     axios.delete(`/api/v1/reviews/${id}`)
-    .then( (data) => {
-      const included = [...reviews]
-      const index = included.findIndex( (data) => data.id == id )
-      included.splice(index, 1)
+      .then((data) => {
+        const included = [...reviews]
+        const index = included.findIndex((data) => data.id == id)
+        included.splice(index, 1)
 
-      setReviews(included)
-    })
-    .catch( data => console.log('Error', data) )
+        setReviews(included)
+      })
+      .catch(data => console.log('Error', data))
   }
 
 
@@ -122,7 +122,7 @@ export default function SingleRestaurant(props) {
 
   return (
     <>
-      <div className="single-restaurant-page">
+      <div style={{ marginLeft: 130 }} className="single-restaurant-page">
         <div className="column">
           <div className="restaurant-data">
             {!restaurant.attributes ? null : (
@@ -136,16 +136,17 @@ export default function SingleRestaurant(props) {
               {!restaurant.attributes ? null : (
                 <img src={restaurant.attributes.image_url} alt={restaurant.attributes.name} width={250} height={300} />
 
-                 )}
+              )}
 
-                 <div>{restaurant?.attributes?.location}</div>
-              
+              <div>{restaurant?.attributes?.location}</div>
+
             </div>
+            <br />
           </div>
           <br />
           <div className="reviews">
-            <h3>Restaurant Reviews</h3>
-            <br />
+            <h4>Restaurant Reviews</h4>
+            {/* <br /> */}
             {userReviews}
           </div>
         </div>
@@ -157,7 +158,7 @@ export default function SingleRestaurant(props) {
               handleChange={handleChange}
               handleSubmit={handleSubmit}
               setRating={setRating}
-              
+
 
             />
           </div>
