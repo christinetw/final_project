@@ -124,13 +124,13 @@ a{
 
 .revds-box{
   width:300px;
-  /* box-shadow: 8px 30px 30px rgba(0,0,0,0.1); */
+  box-shadow: 8px 30px 30px rgba(0,0,0,0.1);
   background-color: rgb(234, 241, 243);
   padding: 20px;
   margin: 15px;
   cursor: pointer;
   box-sizing: border-box;
-  /* border-radius: 70px */
+  border-radius: 80px
   
 }
 .revra-box-conatiner {

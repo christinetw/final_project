@@ -6,7 +6,7 @@ import { useGlobalContext } from './context'
 export default function RestaurantList() {
   const { restaurants, loading } = useGlobalContext()
   if (loading) {
-    return <Loading/>
+    return <Loading />
   }
   if (restaurants.length < 1) {
     return (
@@ -17,7 +17,7 @@ export default function RestaurantList() {
   }
   return (
     <section className='section'>
-      <h2 className='section-title'>restaurant</h2>
+      <h1 className='section-title'>restaurant</h1>
       <div className='restaurants-center'>
         {restaurants.map((item) => {
           return <Restaurant key={item.slug} {...item} />

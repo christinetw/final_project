@@ -19,12 +19,13 @@ const Review = (props) => {
         {/* <div className='description' className="revds-box-container" className="revds-box"><h3>{props.description}</h3> </div> */}
         <div className='description' className="revds-box-container" className="revds-box"> {props.description} </div>
         <div className='date'>{props.created_at} </div>
+        <button className='deletButton' onClick={props.handleDestroy.bind(this, props.id)}>Delete</button>
         <br />
         <div />
       </div>
-      <button className='deletButton' onClick={props.handleDestroy.bind(this, props.id)}>Delete
+      {/* <button className='deletButton' onClick={props.handleDestroy.bind(this, props.id)}>Delete */}
 
-      </button>
+      {/* </button> */}
     </div>
 
   )
